@@ -17,6 +17,7 @@ import ca.ubc.ece.cpen221.mp4.commands.InvalidCommandException;
 import ca.ubc.ece.cpen221.mp4.items.Item;
 import ca.ubc.ece.cpen221.mp4.items.animals.ArenaAnimal;
 //import ca.ubc.ece.cpen221.mp4.items.humans.*;
+import ca.ubc.ece.cpen221.mp4.vehicles.ArenaVehicles;
 
 /**
  * The implementation of the {@link World}.

@@ -5,9 +5,11 @@ import javax.swing.SwingUtilities;
 import ca.ubc.ece.cpen221.mp4.ai.*;
 import ca.ubc.ece.cpen221.mp4.items.Gardener;
 import ca.ubc.ece.cpen221.mp4.items.Grass;
+import ca.ubc.ece.cpen221.mp4.items.Item;
 import ca.ubc.ece.cpen221.mp4.items.animals.*;
 import ca.ubc.ece.cpen221.mp4.staff.WorldImpl;
 import ca.ubc.ece.cpen221.mp4.staff.WorldUI;
+import ca.ubc.ece.cpen221.mp4.vehicles.*;
 
 /**
  * The Main class initialize a world with some {@link Grass}, {@link Rabbit}s,
@@ -28,7 +30,6 @@ public class Main {
 	static final int INITIAL_TIGERS = INITIAL_GRASS / 32;
 	static final int INITIAL_BEARS = INITIAL_GRASS / 40;
 	static final int INITIAL_HYENAS = INITIAL_GRASS / 32;
-	static final int INITIAL_CARS = INITIAL_GRASS / 100;
 	static final int INITIAL_TRUCKS = INITIAL_GRASS / 150;
 	static final int INITIAL_MOTORCYCLES = INITIAL_GRASS / 64;
 	static final int INITIAL_MANS = INITIAL_GRASS / 150;
@@ -38,7 +39,12 @@ public class Main {
 	static final int INITIAL_CATS = INITIAL_GRASS/32;
 	static final int INITIAL_BLUGA_WHALES = INITIAL_GRASS/32;
 	
-
+	//static final int INITIAL_BIKES = INITIAL_GRASS/32;
+	static final int INITIAL_BIKES = 1;
+	static final int INITIAL_CARS = INITIAL_GRASS/32;
+	static final int INITIAL_TANKS = INITIAL_GRASS/32;
+	
+	//static final int INITIAL_E
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
@@ -61,9 +67,14 @@ public class Main {
 		addGnats(world);
 		addRabbits(world);
 		addFoxes(world);
+		
 		addHamsters(world);
 		addCats(world);
 		addBlugaWhales(world);
+		
+		addBike(world);
+		addCar(world);
+		addTank(world);
 		
 	}
 
@@ -133,4 +144,32 @@ public class Main {
         }
     }
 	
+	private void addBike(World world){
+		
+		for(int i = 0; i < INITIAL_BIKES; i++){
+			Location loc = Util.getRandomEmptyLocation(world);
+			Bike bike = new Bike(loc);
+			world.addItem(bike);
+			world.addActor(bike);
+		}
+	}
+
+	private void addCar(World world){
+		for(int i = 0; i < INITIAL_CARS; i++){
+			Location loc = Util.getRandomEmptyLocation(world);
+			Car car = new Car(loc);
+			world.addItem(car);
+			world.addActor(car);
+		}
+	}
+	
+	private void addTank(World world){
+		for(int i = 0; i < INITIAL_TANKS; i++){
+			Location loc = Util.getRandomEmptyLocation(world);
+			Tank tank = new Tank(loc);
+			world.addItem(tank);
+			world.addActor(tank);
+		}
+	}
+
 }

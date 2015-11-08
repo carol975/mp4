@@ -2,7 +2,6 @@ package ca.ubc.ece.cpen221.mp4.items.animals;
 
 import javax.swing.ImageIcon;
 
-import ca.ubc.ece.cpen221.mp4.Food;
 import ca.ubc.ece.cpen221.mp4.Location;
 import ca.ubc.ece.cpen221.mp4.Util;
 import ca.ubc.ece.cpen221.mp4.World;
@@ -11,26 +10,15 @@ import ca.ubc.ece.cpen221.mp4.commands.Command;
 import ca.ubc.ece.cpen221.mp4.items.Grass;
 import ca.ubc.ece.cpen221.mp4.items.LivingItem;
 
-
 /**
  * The {@link Hamster} is an {@link ArenaAnimal} that eats {@link Grass} and can
  * be eaten by {@link Fox}.
  */
 
-
-public class Hamster implements ArenaAnimal {
-    private static final int INITIAL_ENERGY = 30;
-    private static final int MAX_ENERGY = 45;
-    private static final int STRENGTH = 50;
-    private static final int MIN_BREEDING_ENERGY = 7;
-    private static final int VIEW_RANGE = 3;
-    private static final int COOLDOWN = 2;
+public class Hamster extends AbstractArenaAnimal {
     private static final ImageIcon hamsterImage = Util.loadImage("hamster.gif");
 
     private final AI ai;
-
-    private Location location;
-    private int energy;
 
     /**
      * Create a new {@link Hamster} with an {@link AI} at
@@ -43,65 +31,24 @@ public class Hamster implements ArenaAnimal {
      *            : the location where this hamster will be created
      */
     public Hamster(AI hamsterAI, Location initialLocation) {
-        ai = hamsterAI;
-        location = initialLocation;
-        energy = INITIAL_ENERGY;
+        this.ai = hamsterAI;
+        super.setINITIAL_ENERGY(30);
+        super.setEnergy(30);
+        super.setMAX_ENERGY(45);
+        super.setSTRENGTH(50);
+        super.setVIEW_RANGE(2);
+        super.setMIN_BREEDING_ENERGY(7);
+        super.setCOOLDOWN(2);
+        super.setLocation(initialLocation);
+
     }
 
     @Override
     public LivingItem breed() {
-        Hamster child = new Hamster(ai, location);
-        child.energy = energy / 2;
-        this.energy = energy / 2;
+        Hamster child = new Hamster(ai, this.getLocation());
+        child.setEnergy(this.getEnergy() / 2);
+        this.setEnergy(this.getEnergy() / 2);
         return child;
-    }
-
-    @Override
-    public void eat(Food food) {
-        // Note that energy does not exceed energy limit.
-        energy = Math.min(MAX_ENERGY, energy + food.getPlantCalories());
-    }
-
-    @Override
-    public int getCoolDownPeriod() {
-        return COOLDOWN;
-    }
-
-    @Override
-    public int getEnergy() {
-        return energy;
-    }
-
-    @Override
-    public ImageIcon getImage() {
-        return hamsterImage;
-    }
-
-    @Override
-    public Location getLocation() {
-        return location;
-    }
-
-    @Override
-    public int getMaxEnergy() {
-        return MAX_ENERGY;
-    }
-
-    @Override
-    public int getMeatCalories() {
-        // The amount of meat calories it provides is equal to its current
-        // energy.
-        return energy;
-    }
-
-    @Override
-    public int getMinimumBreedingEnergy() {
-        return MIN_BREEDING_ENERGY;
-    }
-
-    @Override
-    public int getMovingRange() {
-        return 1; // Can only move to adjacent locations.
     }
 
     @Override
@@ -110,41 +57,21 @@ public class Hamster implements ArenaAnimal {
     }
 
     @Override
-    public Command getNextAction(World world) {
-        Command nextAction = ai.getNextAction(world, this);
-        this.energy--; // Loses 1 energy regardless of action.
-        return nextAction;
-    }
-
-    @Override
-    public int getPlantCalories() {
-        // This Hamster is not a plant.
-        return 0;
-    }
-
-    @Override
-    public int getStrength() {
-        return STRENGTH;
-    }
-
-    @Override
-    public int getViewRange() {
-        return VIEW_RANGE;
+    public ImageIcon getImage() {
+        return hamsterImage;
     }
 
     @Override
     public boolean isDead() {
-        return energy <= 0;
+        return this.getEnergy() <= 0;
     }
 
     @Override
-    public void loseEnergy(int energyLoss) {
-        this.energy -= energyLoss;
+    public Command getNextAction(World world) {
+        Command nextAction = this.ai.getNextAction(world, this);
+        this.setEnergy(this.getEnergy() - 1); // Loses 1 energy regardless of
+                                              // action.
+        return nextAction;
     }
 
-    @Override
-    public void moveTo(Location targetLocation) {
-        location = targetLocation;
-
-    }
 }

@@ -16,6 +16,7 @@ import ca.ubc.ece.cpen221.mp4.commands.MoveCommand;
 import ca.ubc.ece.cpen221.mp4.commands.WaitCommand;
 import ca.ubc.ece.cpen221.mp4.items.*;
 import ca.ubc.ece.cpen221.mp4.items.animals.*;
+import ca.ubc.ece.cpen221.mp4.vehicles.ArenaVehicles;
 
 public class ArenaAnimalAI implements AI {
 	private int energy;
@@ -59,5 +60,4 @@ public class ArenaAnimalAI implements AI {
 		}
 		return new WaitCommand();
 	}
-
 }

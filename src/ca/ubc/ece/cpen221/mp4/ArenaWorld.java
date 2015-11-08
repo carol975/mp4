@@ -4,6 +4,7 @@ import java.util.Set;
 
 import ca.ubc.ece.cpen221.mp4.items.Item;
 import ca.ubc.ece.cpen221.mp4.items.animals.ArenaAnimal;
+import ca.ubc.ece.cpen221.mp4.vehicles.ArenaVehicles;
 
 /**
  * Subset of the world visible to {@link ArenaAnimal}s.
